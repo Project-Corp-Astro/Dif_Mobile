@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyC6Qtn7hTRNG2RjzrPMc08f6k-w5WJ9j-w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>613867351437</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.corpastrogroup.corpastromobile</string>
+	<key>PROJECT_ID</key>
+	<string>corp-astro-mobile</string>
+	<key>STORAGE_BUCKET</key>
+	<string>corp-astro-mobile.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:613867351437:ios:c8192c15c974d8aa19e1c4</string>
+</dict>
+</plist>

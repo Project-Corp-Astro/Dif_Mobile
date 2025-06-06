@@ -1,0 +1,41 @@
+// babel.config.js
+module.exports = function(api) {
+  api.cache(true);
+  
+  const presets = ['babel-preset-expo'];
+  
+  const plugins = [];
+  
+  // Add each plugin individually to avoid syntax issues
+  plugins.push('react-native-reanimated/plugin');
+  plugins.push('expo-router/babel');
+  plugins.push('nativewind/babel');
+  
+  // Add module-resolver with aliases
+  plugins.push([
+    'babel-plugin-module-resolver',
+    {
+      root: ['.'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+      alias: {
+        '@': './',
+        '@app': './app',
+        '@components': './components',
+        '@animations': './animations',
+        '@state': './state',
+        '@services': './services',
+        '@hooks': './hooks',
+        '@lib': './lib',
+        '@theme': './theme',
+        '@i18n': './i18n',
+        '@tours': './tours',
+        '@assets': './assets'
+      }
+    }
+  ]);
+  
+  return {
+    presets,
+    plugins
+  };
+};

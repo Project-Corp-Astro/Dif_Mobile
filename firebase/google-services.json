@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "613867351437",
+    "project_id": "corp-astro-mobile",
+    "storage_bucket": "corp-astro-mobile.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613867351437:android:55d8db8f230f5c2c19e1c4",
+        "android_client_info": {
+          "package_name": "com.corpastrogroup.corpastromobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUUzd2II_1mrUHYpSD_pmDOqNfPowk4f4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
