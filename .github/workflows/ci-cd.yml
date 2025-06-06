@@ -9,9 +9,7 @@ on:
   pull_request:
     branches: [ main, develop ]
 
-env:
-  # Define environment variables at the workflow level
-  EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+# Environment variables are defined at the job or step level for better security
 
 jobs:
   test:
@@ -68,6 +66,8 @@ jobs:
           eas-version: latest
           
       - name: Login to Expo
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           # Create a temporary token file
           echo "$EXPO_TOKEN" > expo-token.txt
@@ -110,6 +110,8 @@ jobs:
           eas-version: latest
           
       - name: Login to Expo
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           # Create a temporary token file
           echo "$EXPO_TOKEN" > expo-token.txt
