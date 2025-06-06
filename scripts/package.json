@@ -1,0 +1,7 @@
+{
+  "name": "iap-analytics-scripts",
+  "version": "1.0.0",
+  "description": "Scripts for IAP analytics verification",
+  "type": "module",
+  "private": true
+}
