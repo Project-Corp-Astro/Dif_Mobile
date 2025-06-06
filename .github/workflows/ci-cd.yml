@@ -58,19 +58,24 @@ jobs:
       - name: Setup EAS
         run: npm install -g eas-cli
         
-      - name: Create Expo token file
-        run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" > .expo-token
-        
       - name: Login to Expo
-        run: npx eas-cli login --token-file .expo-token
+        run: |
+          # Store token in a file and use it for login
+          echo "$EXPO_TOKEN" > expo-token.txt
+          npx eas-cli login --token=$(cat expo-token.txt)
+          rm expo-token.txt
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         
       - name: Build Android app
         run: |
-          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
             eas build --platform android --profile production --non-interactive
           else
             eas build --platform android --profile preview --non-interactive
           fi
+        env:
+          GITHUB_REF: ${{ github.ref }}
   
   build-ios:
     name: Build iOS App
@@ -94,16 +99,21 @@ jobs:
       - name: Setup EAS
         run: npm install -g eas-cli
         
-      - name: Create Expo token file
-        run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" > .expo-token
-        
       - name: Login to Expo
-        run: npx eas-cli login --token-file .expo-token
+        run: |
+          # Store token in a file and use it for login
+          echo "$EXPO_TOKEN" > expo-token.txt
+          npx eas-cli login --token=$(cat expo-token.txt)
+          rm expo-token.txt
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         
       - name: Build iOS app
         run: |
-          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
             eas build --platform ios --profile production --non-interactive
           else
             eas build --platform ios --profile preview --non-interactive
           fi
+        env:
+          GITHUB_REF: ${{ github.ref }}
