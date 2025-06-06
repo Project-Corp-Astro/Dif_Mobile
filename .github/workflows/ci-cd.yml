@@ -9,6 +9,10 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+env:
+  # Define environment variables at the workflow level
+  EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
 jobs:
   test:
     name: Test and Lint
@@ -58,17 +62,23 @@ jobs:
       - name: Setup EAS
         run: npm install -g eas-cli
         
-      - name: Login to Expo
+      - name: Setup Expo
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
+          
+      - name: Login to Expo
+        run: |
+          # Create a temporary token file
+          echo "$EXPO_TOKEN" > expo-token.txt
+          npx eas-cli login --token-file expo-token.txt
+          rm expo-token.txt
         
-      - name: Build Android app
+      - name: Build Android app (Production)
         if: github.ref == 'refs/heads/main'
         run: eas build --platform android --profile production --non-interactive
         
-      - name: Build Android app (preview)
+      - name: Build Android app (Preview)
         if: github.ref == 'refs/heads/develop'
         run: eas build --platform android --profile preview --non-interactive
   
@@ -94,16 +104,22 @@ jobs:
       - name: Setup EAS
         run: npm install -g eas-cli
         
-      - name: Login to Expo
+      - name: Setup Expo
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
+          
+      - name: Login to Expo
+        run: |
+          # Create a temporary token file
+          echo "$EXPO_TOKEN" > expo-token.txt
+          npx eas-cli login --token-file expo-token.txt
+          rm expo-token.txt
         
-      - name: Build iOS app
+      - name: Build iOS app (Production)
         if: github.ref == 'refs/heads/main'
         run: eas build --platform ios --profile production --non-interactive
         
-      - name: Build iOS app (preview)
+      - name: Build iOS app (Preview)
         if: github.ref == 'refs/heads/develop'
         run: eas build --platform ios --profile preview --non-interactive
