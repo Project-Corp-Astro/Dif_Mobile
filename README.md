@@ -8,6 +8,17 @@ Corp Astro is a comprehensive astrology mobile application that provides persona
 
 This mobile application serves as the client-side interface that users interact with directly. It communicates with the Corp Astro backend API to retrieve astrological data, process payments, manage user accounts, and deliver personalized content. The application handles complex UI rendering, state management, offline capabilities, and device-specific features while the backend manages data persistence, business logic, and third-party integrations.
 
+### Key Technologies
+
+- **Framework**: React Native with Expo managed workflow
+- **State Management**: Zustand for client-side state
+- **Server State**: React Query (@tanstack/react-query) for data fetching and caching
+- **UI Framework**: Tamagui for cross-platform UI components
+- **Authentication**: Supabase Auth with secure token storage
+- **Payments**: React Native IAP for in-app purchases
+- **Notifications**: Firebase Cloud Messaging (FCM) for push notifications
+- **Builds & Deployment**: Expo Application Services (EAS) for builds and OTA updates
+
 ## 🌟 Features
 
 ### User Experience
@@ -42,6 +53,20 @@ This mobile application serves as the client-side interface that users interact 
 
 ### Technical Architecture
 
+#### State Management & Data Flow
+- **Zustand Store Architecture**: Lightweight state management with hooks-based API
+  - `userStore.ts`: Manages user authentication state, profile data, and preferences
+  - `themeStore.ts`: Handles theme preferences with system theme integration
+  - `subscriptionStore.ts`: Tracks subscription status and purchase history
+- **React Query Integration**: Server state management with automatic caching and revalidation
+  - Optimistic updates for improved UX during network operations
+  - Background refetching with configurable stale times
+  - Automatic retry logic for failed requests
+- **Persistence Layer**: Local storage with encryption for sensitive data
+  - AsyncStorage for general app preferences
+  - SecureStore for authentication tokens and payment information
+  - Zustand persist middleware for seamless state rehydration
+
 #### Authentication & Security
 - **Multi-provider Authentication**: Sign-in with email, Apple, Google, and Facebook
 - **Biometric Authentication**: Fingerprint and Face ID login options
@@ -51,11 +76,26 @@ This mobile application serves as the client-side interface that users interact 
 
 #### Subscription & Payment Systems
 - **Tiered Subscription Plans**: Multiple subscription levels with different feature sets
-- **In-App Purchase Integration**: Native StoreKit and Google Play Billing integration
-- **Receipt Validation**: Server-side verification of purchase receipts
-- **Subscription Management**: User interface for viewing and managing subscription status
-- **Promotional Offers**: Support for introductory offers and limited-time promotions
-- **Restore Purchases**: Functionality to restore previous purchases across devices
+- **In-App Purchases**
+  - **Implementation**: Uses `react-native-iap` library for cross-platform purchase handling
+  - **Purchase Flow**:
+    1. Products fetched from App Store/Google Play via `getProducts` and `getSubscriptions` APIs
+    2. User initiates purchase through app UI
+    3. Purchase validated locally and receipt sent to backend API
+    4. Backend verifies receipt with platform stores
+    5. Subscription status updated in database and synced to app
+  - **Subscription Types**:
+    - `MONTHLY`: Monthly recurring subscription (`com.corpastro.app.monthly`)
+    - `YEARLY`: Annual subscription with discount (`com.corpastro.app.yearly`)
+    - `LIFETIME`: One-time purchase for perpetual access (`com.corpastro.app.lifetime`)
+  - **Analytics Integration**: Purchase events tracked with custom analytics hooks
+  - **Error Handling**: Comprehensive error handling for network issues, store connectivity, and receipt validation failures
+  - **Receipt Validation**: Server-side verification of purchase receipts with Apple/Google APIs
+  - **Restore Purchases**: Functionality to restore previous purchases across devices
+  - **Subscription Status**: Real-time tracking of subscription state with automatic refresh
+  - **Trial Period**: Support for free trial periods with configurable durations
+  - **Promotional Offers**: Support for introductory offers and limited-time promotions
+  - **Restore Purchases**: Functionality to restore previous purchases across devices
 
 #### Performance & Reliability
 - **Offline Mode**: Core functionality and cached content available without internet
