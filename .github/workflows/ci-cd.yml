@@ -59,23 +59,18 @@ jobs:
         run: npm install -g eas-cli
         
       - name: Login to Expo
-        run: |
-          # Store token in a file and use it for login
-          echo "$EXPO_TOKEN" > expo-token.txt
-          npx eas-cli login --token=$(cat expo-token.txt)
-          rm expo-token.txt
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
         
       - name: Build Android app
-        run: |
-          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
-            eas build --platform android --profile production --non-interactive
-          else
-            eas build --platform android --profile preview --non-interactive
-          fi
-        env:
-          GITHUB_REF: ${{ github.ref }}
+        if: github.ref == 'refs/heads/main'
+        run: eas build --platform android --profile production --non-interactive
+        
+      - name: Build Android app (preview)
+        if: github.ref == 'refs/heads/develop'
+        run: eas build --platform android --profile preview --non-interactive
   
   build-ios:
     name: Build iOS App
@@ -100,20 +95,15 @@ jobs:
         run: npm install -g eas-cli
         
       - name: Login to Expo
-        run: |
-          # Store token in a file and use it for login
-          echo "$EXPO_TOKEN" > expo-token.txt
-          npx eas-cli login --token=$(cat expo-token.txt)
-          rm expo-token.txt
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
         
       - name: Build iOS app
-        run: |
-          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
-            eas build --platform ios --profile production --non-interactive
-          else
-            eas build --platform ios --profile preview --non-interactive
-          fi
-        env:
-          GITHUB_REF: ${{ github.ref }}
+        if: github.ref == 'refs/heads/main'
+        run: eas build --platform ios --profile production --non-interactive
+        
+      - name: Build iOS app (preview)
+        if: github.ref == 'refs/heads/develop'
+        run: eas build --platform ios --profile preview --non-interactive
