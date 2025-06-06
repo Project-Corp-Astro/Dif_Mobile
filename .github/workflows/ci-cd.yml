@@ -58,10 +58,11 @@ jobs:
       - name: Setup EAS
         run: npm install -g eas-cli
         
+      - name: Create Expo token file
+        run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" > .expo-token
+        
       - name: Login to Expo
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas login --non-interactive
+        run: npx eas-cli login --token-file .expo-token
         
       - name: Build Android app
         run: |
@@ -93,10 +94,11 @@ jobs:
       - name: Setup EAS
         run: npm install -g eas-cli
         
+      - name: Create Expo token file
+        run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" > .expo-token
+        
       - name: Login to Expo
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas login --non-interactive
+        run: npx eas-cli login --token-file .expo-token
         
       - name: Build iOS app
         run: |
